@@ -1,9 +1,2 @@
-# EventHub API
-
-Servicio backend RESTful con Node.js y Express para la gestión de eventos académicos (conferencias, talleres y seminarios).
-
-## Instalación y ejecución
-
-1. Instalar dependencias:
-   ```bash
-   npm install
+# Proyecto_AD_Equipo_Arca_De_Noe
+EvenHub API: Servicio RESTful para la gestión de eventos académicos
