@@ -1,0 +1,14 @@
+{
+  "speakers": [
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440000",
+      "nombre": "Dra. Stefany Sanchez",
+      "email": "stefany.sanchnez@ipn.mx",
+      "institucion": "UPIITA - IPN",
+      "especialidad": "Sistemas Distribuidos y Cómputo en la Nube"
+    }
+  ],
+  "events": [],
+  "attendees": [],
+  "registrations": []
+}
