@@ -1,23 +1,23 @@
 const ApiError = require('../utils/ApiError');
 
 function listSpeakers() {
-  throw new ApiError(501, 'Endpoint GET /api/v1/speakers no implementado', 'NOT_IMPLEMENTED');
+  throw new ApiError(501, 'NOT_IMPLEMENTED', 'Endpoint GET /api/v1/speakers no implementado');
 }
 
-function getSpeakerById() {
-  throw new ApiError(501, 'Endpoint GET /api/v1/speakers/:id no implementado', 'NOT_IMPLEMENTED');
+function getSpeakerById(id) {
+  throw new ApiError(501, 'NOT_IMPLEMENTED', 'Endpoint GET /api/v1/speakers/:id no implementado');
 }
 
-function createSpeaker() {
-  throw new ApiError(501, 'Endpoint POST /api/v1/speakers no implementado', 'NOT_IMPLEMENTED');
+function createSpeaker(data) {
+  throw new ApiError(501, 'NOT_IMPLEMENTED', 'Endpoint POST /api/v1/speakers no implementado');
 }
 
-function replaceSpeaker() {
-  throw new ApiError(501, 'Endpoint PUT /api/v1/speakers/:id no implementado', 'NOT_IMPLEMENTED');
+function replaceSpeaker(id, data) {
+  throw new ApiError(501, 'NOT_IMPLEMENTED', 'Endpoint PUT /api/v1/speakers/:id no implementado');
 }
 
-function deleteSpeaker() {
-  throw new ApiError(501, 'Endpoint DELETE /api/v1/speakers/:id no implementado', 'NOT_IMPLEMENTED');
+function deleteSpeaker(id) {
+  throw new ApiError(501, 'NOT_IMPLEMENTED', 'Endpoint DELETE /api/v1/speakers/:id no implementado');
 }
 
 module.exports = {
