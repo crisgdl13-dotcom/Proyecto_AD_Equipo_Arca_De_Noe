@@ -34,9 +34,11 @@ function replace(req, res, next) {
 
 function remove(req, res, next) {
   try {
-    speakersService.deleteSpeaker(req.params.id);
+   speakersService.deleteSpeaker(req.params.id);
+    res.status(204).send();
+    
   } catch (err) {
-    next(err);
+   next(err);
   }
 }
 
