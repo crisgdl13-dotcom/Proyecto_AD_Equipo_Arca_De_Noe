@@ -2,11 +2,15 @@ const ApiError = require('../utils/ApiError');
 const { speakers } = require('../data/store');
 
 function listSpeakers() {
-  throw new ApiError(501, 'NOT_IMPLEMENTED', 'Endpoint GET /api/v1/speakers no implementado');
+  return speakers;
 }
 
 function getSpeakerById(id) {
-  throw new ApiError(501, 'NOT_IMPLEMENTED', 'Endpoint GET /api/v1/speakers/:id no implementado');
+  const speaker = speakers.find((s) => s.id === id);
+  if (!speaker) {
+    throw new ApiError(404, 'NOT_FOUND', `El ponente ${id} no existe`);
+  }
+  return speaker;
 }
 
 function createSpeaker(data) {

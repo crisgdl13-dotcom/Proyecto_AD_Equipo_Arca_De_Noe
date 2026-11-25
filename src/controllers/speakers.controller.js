@@ -2,7 +2,7 @@ const speakersService = require('../services/speakers.service');
 
 function list(req, res, next) {
   try {
-    speakersService.listSpeakers();
+    res.status(200).json(speakersService.listSpeakers());
   } catch (err) {
     next(err);
   }
@@ -10,7 +10,7 @@ function list(req, res, next) {
 
 function getById(req, res, next) {
   try {
-    speakersService.getSpeakerById(req.params.id);
+    res.status(200).json(speakersService.getSpeakerById(req.params.id));
   } catch (err) {
     next(err);
   }
