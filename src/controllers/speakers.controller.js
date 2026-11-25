@@ -16,9 +16,16 @@ function getById(req, res, next) {
   }
 }
 
+// EVH-38: Registrar un nuevo ponente
 function create(req, res, next) {
   try {
-    speakersService.createSpeaker(req.body);
+    const nuevoPonente = speakersService.createSpeaker(req.body);
+
+    res
+      .location(`/api/v1/speakers/${nuevoPonente.id}`)
+      .status(201)
+      .json(nuevoPonente);
+
   } catch (err) {
     next(err);
   }

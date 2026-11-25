@@ -1,5 +1,6 @@
 const ApiError = require('../utils/ApiError');
 const { speakers } = require('../data/store');
+const { generateId } = require('../utils/idGenerator');
 
 function listSpeakers() {
   return speakers;
@@ -13,8 +14,37 @@ function getSpeakerById(id) {
   return speaker;
 }
 
+// EVH-38: Crear un nuevo ponente
 function createSpeaker(data) {
-  throw new ApiError(501, 'NOT_IMPLEMENTED', 'Endpoint POST /api/v1/speakers no implementado');
+
+  const email = data.email.trim().toLowerCase();
+
+  // Verificar si el correo ya existe
+  const existe = speakers.some(
+    speaker => speaker.email.trim().toLowerCase() === email
+  );
+
+  if (existe) {
+    throw new ApiError(
+      409,
+      'EMAIL_ALREADY_EXISTS',
+      'El correo electronico ya esta registrado'
+    );
+  }
+
+  // Crear nuevo ponente
+  const nuevoPonente = {
+    id: generateId(),
+    nombre: data.nombre.trim(),
+    email: email,
+    institucion: data.institucion.trim(),
+    especialidad: data.especialidad.trim()
+  };
+
+  // Guardar ponente en memoria
+  speakers.push(nuevoPonente);
+
+  return nuevoPonente;
 }
 
 function replaceSpeaker(id, data) {
