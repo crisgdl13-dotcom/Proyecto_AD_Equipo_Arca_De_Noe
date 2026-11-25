@@ -12,19 +12,19 @@ function errorHandler(err, req, res, next) {
     err = new ApiError(400, 'BAD_REQUEST', 'El cuerpo de la petición no es un JSON válido');
   }
 
-  const isApiError = err instanceof ApiError;
   const status = Number.isInteger(err && err.status) ? err.status : 500;
-  const isServerError = status >= 500;
+  const isInternal = status === 500;
 
-  if (isServerError) {
-    // El detalle real se queda en el log del servidor, no se envía al cliente.
+  if (status >= 500) {
+    // El detalle real se queda en el log del servidor.
     console.error(err);
   }
 
-  const code = isServerError
+  // Solo el 500 esconde detalles. El 501 (no implementado) sí se muestra.
+  const code = isInternal
     ? 'INTERNAL_SERVER_ERROR'
-    : (err.code || (isApiError ? 'ERROR' : 'BAD_REQUEST'));
-  const message = isServerError ? 'Error interno del servidor' : err.message;
+    : (err.code || 'BAD_REQUEST');
+  const message = isInternal ? 'Error interno del servidor' : err.message;
 
   res.status(status).json({
     error: {

@@ -1,13 +1,17 @@
 const ApiError = require('../utils/ApiError');
-const { randomUUID } = require('node:crypto');
-const speakers = require('../data/speakers.data');
+const { speakers } = require('../data/store');
+const { generateId } = require('../utils/idGenerator');
 
 function listSpeakers() {
-  throw new ApiError(501, 'Endpoint GET /api/v1/speakers no implementado', 'NOT_IMPLEMENTED');
+  return speakers;
 }
 
-function getSpeakerById() {
-  throw new ApiError(501, 'Endpoint GET /api/v1/speakers/:id no implementado', 'NOT_IMPLEMENTED');
+function getSpeakerById(id) {
+  const speaker = speakers.find((s) => s.id === id);
+  if (!speaker) {
+    throw new ApiError(404, 'NOT_FOUND', `El ponente ${id} no existe`);
+  }
+  return speaker;
 }
 
 // EVH-38: Crear un nuevo ponente
@@ -30,7 +34,7 @@ function createSpeaker(data) {
 
   // Crear nuevo ponente
   const nuevoPonente = {
-    id: randomUUID(),
+    id: generateId(),
     nombre: data.nombre.trim(),
     email: email,
     institucion: data.institucion.trim(),
@@ -43,12 +47,45 @@ function createSpeaker(data) {
   return nuevoPonente;
 }
 
-function replaceSpeaker() {
-  throw new ApiError(501, 'Endpoint PUT /api/v1/speakers/:id no implementado', 'NOT_IMPLEMENTED');
+function replaceSpeaker(id, data) {
+  const index = speakers.findIndex((s) => s.id === id);
+  if (index === -1) {
+    throw new ApiError(404, 'NOT_FOUND', `El ponente ${id} no existe`);
+  }
+
+  const body = data || {};
+  const campos = ['nombre', 'email', 'institucion', 'especialidad'];
+  for (const campo of campos) {
+    if (typeof body[campo] !== 'string' || body[campo].trim() === '') {
+      throw new ApiError(400, 'BAD_REQUEST', `El campo ${campo} es obligatorio y debe ser texto`);
+    }
+  }
+
+  const email = body.email.trim();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    throw new ApiError(400, 'BAD_REQUEST', 'El campo email no es válido');
+  }
+
+  const emailRepetido = speakers.some(
+    (s) => s.id !== id && (s.email || '').toLowerCase() === email.toLowerCase()
+  );
+  if (emailRepetido) {
+    throw new ApiError(409, 'CONFLICT', 'Ese email ya pertenece a otro ponente');
+  }
+
+  const actualizado = {
+    id,
+    nombre: body.nombre.trim(),
+    email,
+    institucion: body.institucion.trim(),
+    especialidad: body.especialidad.trim(),
+  };
+  speakers[index] = actualizado;
+  return actualizado;
 }
 
-function deleteSpeaker() {
-  throw new ApiError(501, 'Endpoint DELETE /api/v1/speakers/:id no implementado', 'NOT_IMPLEMENTED');
+function deleteSpeaker(id) {
+  throw new ApiError(501, 'NOT_IMPLEMENTED', 'Endpoint DELETE /api/v1/speakers/:id no implementado');
 }
 
 module.exports = {
