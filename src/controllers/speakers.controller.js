@@ -24,13 +24,21 @@ function create(req, res, next) {
   }
 }
 
+
+
+
+
 function replace(req, res, next) {
   try {
-    speakersService.replaceSpeaker(req.params.id, req.body);
+    res.status(200).json(speakersService.replaceSpeaker(req.params.id, req.body));
   } catch (err) {
     next(err);
   }
 }
+
+
+
+
 
 function remove(req, res, next) {
   try {
