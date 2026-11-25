@@ -1,0 +1,155 @@
+{
+  "info": {
+    "_postman_id": "3ccf5841-6617-4336-913a-aecd84fa43c9",
+    "name": "Proyecto EVH",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "59063560",
+    "_collection_link": "https://go.postman.co/collection/59063560-3ccf5841-6617-4336-913a-aecd84fa43c9?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Speakers",
+      "item": [
+        {
+          "name": "Listar ponentes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/speakers",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "speakers"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Obtener ponente por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/speakers/{{speakerId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "speakers",
+                "{{speakerId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Crear ponente",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"nombre\": \"Luciano Prueba\",\r\n    \"email\": \"luciano@ejemplo2.com\",\r\n    \"institucion\": \"UPIITA\",\r\n    \"especialidad\": \"Aplicaciones Distribuidas\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/speakers",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "speakers"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Actualizar ponente",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"nombre\": \"Luciano Actualizado\",\r\n  \"email\": \"luciano.nuevo@ejemplo.com\",\r\n  \"institucion\": \"IPN - UPIITA\",\r\n  \"especialidad\": \"Arquitectura REST\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/speakers/{{speakerId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "speakers",
+                "{{speakerId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Eliminar ponente",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/speakers/{{speakerId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "speakers",
+                "{{speakerId}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Health",
+      "item": [
+        {
+          "name": "Health check",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Código de estado 200 OK\", () => pm.response.to.have.status(200));\r\npm.test(\"Respuesta JSON válida\", () =>\r\n  pm.expect(pm.response.json()).to.be.an(\"object\"));\r\npm.test(\"Tiempo de respuesta menor a 300 ms\", () =>\r\n  pm.expect(pm.response.responseTime).to.be.below(300));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/health",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "health"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
