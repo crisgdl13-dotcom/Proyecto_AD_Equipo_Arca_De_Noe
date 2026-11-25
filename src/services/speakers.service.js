@@ -55,7 +55,15 @@ function replaceSpeaker(id, data) {
 }
 
 function deleteSpeaker(id) {
-  throw new ApiError(501, 'NOT_IMPLEMENTED', 'Endpoint DELETE /api/v1/speakers/:id no implementado');
+  const index = speakers.findIndex(speaker => speaker.id === id);
+  
+  if (index === -1) {
+    throw new ApiError(404, 'NOT_FOUND', 'El ponente no existe');
+  }
+
+  speakers.splice(index, 1);
+  
+  return true;
 }
 
 module.exports = {
