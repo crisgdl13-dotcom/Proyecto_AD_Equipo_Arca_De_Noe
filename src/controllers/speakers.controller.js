@@ -2,7 +2,7 @@ const speakersService = require('../services/speakers.service');
 
 function list(req, res, next) {
   try {
-    speakersService.listSpeakers();
+    res.status(200).json(speakersService.listSpeakers());
   } catch (err) {
     next(err);
   }
@@ -10,7 +10,7 @@ function list(req, res, next) {
 
 function getById(req, res, next) {
   try {
-    speakersService.getSpeakerById(req.params.id);
+    res.status(200).json(speakersService.getSpeakerById(req.params.id));
   } catch (err) {
     next(err);
   }
@@ -24,13 +24,21 @@ function create(req, res, next) {
   }
 }
 
+
+
+
+
 function replace(req, res, next) {
   try {
-    speakersService.replaceSpeaker(req.params.id, req.body);
+    res.status(200).json(speakersService.replaceSpeaker(req.params.id, req.body));
   } catch (err) {
     next(err);
   }
 }
+
+
+
+
 
 function remove(req, res, next) {
   try {
