@@ -18,7 +18,40 @@ function createSpeaker(data) {
 }
 
 function replaceSpeaker(id, data) {
-  throw new ApiError(501, 'NOT_IMPLEMENTED', 'Endpoint PUT /api/v1/speakers/:id no implementado');
+  const index = speakers.findIndex((s) => s.id === id);
+  if (index === -1) {
+    throw new ApiError(404, 'NOT_FOUND', `El ponente ${id} no existe`);
+  }
+
+  const body = data || {};
+  const campos = ['nombre', 'email', 'institucion', 'especialidad'];
+  for (const campo of campos) {
+    if (typeof body[campo] !== 'string' || body[campo].trim() === '') {
+      throw new ApiError(400, 'BAD_REQUEST', `El campo ${campo} es obligatorio y debe ser texto`);
+    }
+  }
+
+  const email = body.email.trim();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    throw new ApiError(400, 'BAD_REQUEST', 'El campo email no es válido');
+  }
+
+  const emailRepetido = speakers.some(
+    (s) => s.id !== id && (s.email || '').toLowerCase() === email.toLowerCase()
+  );
+  if (emailRepetido) {
+    throw new ApiError(409, 'CONFLICT', 'Ese email ya pertenece a otro ponente');
+  }
+
+  const actualizado = {
+    id,
+    nombre: body.nombre.trim(),
+    email,
+    institucion: body.institucion.trim(),
+    especialidad: body.especialidad.trim(),
+  };
+  speakers[index] = actualizado;
+  return actualizado;
 }
 
 function deleteSpeaker(id) {
